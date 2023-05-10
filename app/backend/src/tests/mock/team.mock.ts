@@ -1,52 +1,68 @@
 const getTeamsMock = [
   {
-    team_name: 'Avaí/Kindermann',
+    "id": 1,
+    "teamName": "Avaí/Kindermann"
   },
   {
-    team_name: 'Bahia',
+    "id": 2,
+    "teamName": "Bahia"
   },
   {
-    team_name: 'Botafogo',
+    "id": 3,
+    "teamName": "Botafogo"
   },
   {
-    team_name: 'Corinthians',
+    "id": 4,
+    "teamName": "Corinthians"
   },
   {
-    team_name: 'Cruzeiro',
+    "id": 5,
+    "teamName": "Cruzeiro"
   },
   {
-    team_name: 'Ferroviária',
+    "id": 6,
+    "teamName": "Ferroviária"
   },
   {
-    team_name: 'Flamengo',
+    "id": 7,
+    "teamName": "Flamengo"
   },
   {
-    team_name: 'Grêmio',
+    "id": 8,
+    "teamName": "Grêmio"
   },
   {
-    team_name: 'Internacional',
+    "id": 9,
+    "teamName": "Internacional"
   },
   {
-    team_name: 'Minas Brasília',
+    "id": 10,
+    "teamName": "Minas Brasília"
   },
   {
-    team_name: 'Napoli-SC',
+    "id": 11,
+    "teamName": "Napoli-SC"
   },
   {
-    team_name: 'Palmeiras',
+    "id": 12,
+    "teamName": "Palmeiras"
   },
   {
-    team_name: 'Real Brasília',
+    "id": 13,
+    "teamName": "Real Brasília"
   },
   {
-    team_name: 'Santos',
+    "id": 14,
+    "teamName": "Santos"
   },
   {
-    team_name: 'São José-SP',
+    "id": 15,
+    "teamName": "São José-SP"
   },
   {
-    team_name: 'São Paulo',
-  },
+    "id": 16,
+    "teamName": "São Paulo"
+  }
 ]
 
 export default getTeamsMock;
