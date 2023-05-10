@@ -3,7 +3,7 @@ import db from '.';
 
 class Team extends Model {
   declare teamName: string;
-} 
+}
 Team.init({
   teamName: {
     type: DataTypes.STRING,
