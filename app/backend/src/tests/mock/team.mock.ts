@@ -65,4 +65,12 @@ const getTeamsMock = [
   }
 ]
 
-export default getTeamsMock;
+const get1TeamMock = {
+  "id": 16,
+  "teamName": "São Paulo"
+}
+
+export default {
+  getTeamsMock,
+  get1TeamMock,
+}
