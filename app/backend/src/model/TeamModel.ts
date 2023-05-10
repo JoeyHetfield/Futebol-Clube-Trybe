@@ -7,6 +7,11 @@ class TeamModel {
     const teams = await this.team.findAll();
     return teams;
   }
+
+  async get1Team(id: number) {
+    const team = await this.team.findByPk(id);
+    return team;
+  }
 }
 
 export default TeamModel;
