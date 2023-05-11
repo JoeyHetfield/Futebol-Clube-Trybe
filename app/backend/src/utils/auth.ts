@@ -8,7 +8,7 @@ const configJWT: jwt.SignOptions = {
 };
 
 class Jwt {
-  static createToken = (payload: string) => {
+  static createToken = (payload: string | object) => {
     const token = jwt.sign(payload, secretKey, configJWT);
     console.log(token);
     return token;
