@@ -1,6 +1,5 @@
 export default class ErrorFile extends Error {
-  constructor(message, status) {
+  constructor(message: string, status: number) {
     super(message);
-    this.status = status;
   }
 }
