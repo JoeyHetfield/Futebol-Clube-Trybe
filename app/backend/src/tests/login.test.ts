@@ -6,11 +6,18 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 
-import TeamModel from '../model/TeamModel';
-import getTeamsMock from './mock/team.mock';
-import get1TeamMock from './mock/team.mock';
-import Team from '../database/models/Team';
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
+
+describe('Testando o Login', () => {
+  afterEach(sinon.restore);
+
+  it('Retorna erro quando não passa o email', async () => {
+    const { status, body } = await chai.request(app).post('/login').send({});
+
+    expect(status).to.be.equal(400);
+    expect(body.message).to.be.equal('All fields must be filled');
+  }
+  );
+});
