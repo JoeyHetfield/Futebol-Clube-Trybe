@@ -7,11 +7,8 @@ class LoginService {
 
   async login(email: string, password: string) {
     const user = await this.userModel.getUserByMail(email);
-    if (!user) {
-      throw new ErrorFile('User not found', 404);
-    }
-    if (user.password !== password) {
-      throw new ErrorFile('Wrong password', 401);
+    if (!user || !password) {
+      throw new ErrorFile('All fields must be filled', 400);
     }
     const token = this.jwt.createToken({ id: user.id, email });
     return token;
