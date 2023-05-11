@@ -5,15 +5,15 @@ import Jwt from '../utils/auth';
 class LoginService {
   constructor(private userModel = new UserModel(), private jwt = new Jwt()) {}
 
-  async login(mail: string, password: string) {
-    const user = await this.userModel.getUserByMail(mail);
+  async login(email: string, password: string) {
+    const user = await this.userModel.getUserByMail(email);
     if (!user) {
       throw new ErrorFile('User not found', 404);
     }
     if (user.password !== password) {
       throw new ErrorFile('Wrong password', 401);
     }
-    const token = this.jwt.createToken({ id: user.id, mail });
+    const token = this.jwt.createToken({ id: user.id, email });
     return token;
   }
 }

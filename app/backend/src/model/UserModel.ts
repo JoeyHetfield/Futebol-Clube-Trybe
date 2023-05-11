@@ -1,10 +1,10 @@
 import User from '../database/models/User';
 
 class UserModel {
-  constructor(private user = User) {}
+  constructor(private _user = User) {}
 
-  async getUserByMail(mail: string) {
-    const user = await this.user.findOne({ where: { mail } });
+  async getUserByMail(email: string) {
+    const user = await this._user.findOne({ where: { email } });
     return user;
   }
 }
