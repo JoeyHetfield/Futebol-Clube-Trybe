@@ -3,7 +3,7 @@ import ErrorFile from '../utils/ErrorFile';
 import Jwt from '../utils/auth';
 
 class LoginService {
-  constructor(private userModel = new UserModel()) {}
+  constructor(private userModel = new UserModel(), private jwt = new Jwt()) {}
 
   async login(mail: string, password: string) {
     const user = await this.userModel.getUserByMail(mail);
@@ -13,7 +13,7 @@ class LoginService {
     if (user.password !== password) {
       throw new ErrorFile('Wrong password', 401);
     }
-    const token = Jwt.createToken({ id: user.id, mail });
+    const token = this.jwt.createToken({ id: user.id, mail });
     return token;
   }
 }

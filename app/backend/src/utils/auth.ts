@@ -1,21 +1,23 @@
 import jwt = require('jsonwebtoken');
 
-const secretKey = process.env.JWT_SECRET as string;
-
-const configJWT: jwt.SignOptions = {
-  expiresIn: '7d',
-  algorithm: 'HS256',
-};
-
 class Jwt {
-  static createToken = (payload: string | object) => {
-    const token = jwt.sign(payload, secretKey, configJWT);
+  private _secretKey = process.env.JWT_SECRET || 'secret';
+
+  private _configJWT: jwt.SignOptions = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+
+  constructor(private _jwt = jwt) {}
+
+  createToken = (payload: string | object) => {
+    const token = jwt.sign(payload, this._secretKey, this._configJWT);
     console.log(token);
     return token;
   };
 
-  static validateToken = (token: string) => {
-    const isValid = jwt.verify(token, secretKey);
+  validateToken = (token: string) => {
+    const isValid = jwt.verify(token, this._secretKey);
     return isValid;
   };
 }
