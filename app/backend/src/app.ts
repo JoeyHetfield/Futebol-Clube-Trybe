@@ -1,10 +1,15 @@
 import * as express from 'express';
+import 'express-async-errors';
 import router from './Routes';
+import handleError from './middlewares/handleError';
 
 class App {
   public app: express.Express;
 
-  constructor(private routers: express.Router = router) {
+  constructor(
+    private routers: express.Router = router,
+    private handleErrors = handleError,
+  ) {
     this.app = express();
 
     this.config();
@@ -12,6 +17,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.use(this.routers);
+    this.app.use(this.handleErrors);
   }
 
   private config():void {
