@@ -3,13 +3,14 @@ import Match from '../database/models/Match';
 class MatchModel {
   constructor(private match = Match) {}
 
-  async getMatches(inProgress?: boolean) {
-    const matches = await this.match.scope('matchScope').findAll();
-
-    if (inProgress !== undefined) {
-      return matches.filter((match) => match.inProgress === inProgress);
+  async getMatches(inProgress?: string) {
+    if (inProgress === undefined) {
+      const matches = await this.match.scope('matchScope').findAll();
+      return matches;
     }
-
+    const matches = await this.match.scope('matchScope').findAll({
+      where: { inProgress: inProgress === 'true' },
+    });
     return matches;
   }
 }

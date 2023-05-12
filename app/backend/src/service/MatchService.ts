@@ -7,7 +7,7 @@ class MatchService {
     private teamModel = new TeamModel(),
   ) {}
 
-  async getMatches(inProgress?: boolean) {
+  async getMatches(inProgress?: string) {
     const matches = await this.matchModel.getMatches(inProgress);
     return matches;
   }
