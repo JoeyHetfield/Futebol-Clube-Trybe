@@ -13,7 +13,7 @@ class LoginService {
     if (!user || !LoginService.isPassword(user, password)) {
       throw new ErrorFile('Invalid email or password', 401);
     }
-    const token = this.jwt.createToken({ id: user.id, email });
+    const token = this.jwt.createToken({ id: user.id, email, role: user.role });
     return token;
   }
 

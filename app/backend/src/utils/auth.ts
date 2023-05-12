@@ -16,9 +16,9 @@ class Jwt {
     return token;
   };
 
-  validateToken = (token: string) => {
+  validateToken = <T>(token: string): T => {
     const isValid = jwt.verify(token, this._secretKey);
-    return isValid;
+    return isValid as T;
   };
 }
 
