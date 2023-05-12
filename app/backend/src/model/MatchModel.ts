@@ -1,4 +1,5 @@
 import Match from '../database/models/Match';
+import ErrorFile from '../utils/ErrorFile';
 
 class MatchModel {
   constructor(private match = Match) {}
@@ -25,11 +26,16 @@ class MatchModel {
 
   async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
     const match = await this.match.findByPk(id);
-    if (match) {
-      match.homeTeamGoals = homeTeamGoals;
-      match.awayTeamGoals = awayTeamGoals;
-      await match.save();
+    if (!match) {
+      throw new ErrorFile('Match not found', 404);
     }
+    if (!match.inProgress) {
+      throw new ErrorFile('Match is already over', 400);
+    }
+    match.homeTeamGoals = homeTeamGoals;
+    match.awayTeamGoals = awayTeamGoals;
+    await match.save();
+
     return match;
   }
 }
