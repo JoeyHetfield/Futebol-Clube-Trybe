@@ -7,10 +7,8 @@ class MatchService {
     private teamModel = new TeamModel(),
   ) {}
 
-  // adicionando linha para tentar pasasar de novo no github, tinha dado erro
-
-  async getMatches() {
-    const matches = await this.matchModel.getMatches();
+  async getMatches(inProgress?: boolean) {
+    const matches = await this.matchModel.getMatches(inProgress);
     return matches;
   }
 }

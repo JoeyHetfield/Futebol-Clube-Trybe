@@ -5,7 +5,8 @@ class MatchController {
   constructor(private matchService = new MatchService()) {}
 
   async getMatches(req: Request, res: Response) {
-    const matches = await this.matchService.getMatches();
+    const { inProgress } = req.query;
+    const matches = await this.matchService.getMatches(inProgress === 'true');
     res.status(200).json(matches);
   }
 }
