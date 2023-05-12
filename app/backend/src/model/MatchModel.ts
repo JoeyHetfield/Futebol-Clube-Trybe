@@ -22,6 +22,16 @@ class MatchModel {
     }
     return match;
   }
+
+  async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    const match = await this.match.findByPk(id);
+    if (match) {
+      match.homeTeamGoals = homeTeamGoals;
+      match.awayTeamGoals = awayTeamGoals;
+      await match.save();
+    }
+    return match;
+  }
 }
 
 export default MatchModel;
