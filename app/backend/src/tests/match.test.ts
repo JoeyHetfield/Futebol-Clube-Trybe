@@ -6,8 +6,8 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 
-import MatchModel from '../model/MatchModel';
 import getMatchesMock from './mock/match.mock';
+import getMatchesInProgressMock from './mock/match.mock';
 import Match from '../database/models/Match';
 
 chai.use(chaiHttp);
@@ -30,6 +30,5 @@ describe('Se getMatches funciona', () => {
 
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal(getMatchesMock);
-  
   })
-})
+});
