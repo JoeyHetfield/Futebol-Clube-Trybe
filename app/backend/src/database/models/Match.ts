@@ -44,4 +44,11 @@ Match.belongsTo(Team, { foreignKey: 'awayTeamId', as: 'awayTeam' });
 Team.hasMany(Match, { foreignKey: 'homeTeamId', as: 'homeTeam' });
 Team.hasMany(Match, { foreignKey: 'awayTeamId', as: 'awayTeam' });
 
+Match.addScope('matchScope', {
+  include: [
+    { attributes: ['teamName'], association: 'homeTeam' },
+    { attributes: ['teamName'], association: 'awayTeam' },
+  ],
+});
+
 export default Match;

@@ -4,7 +4,7 @@ class MatchModel {
   constructor(private match = Match) {}
 
   async getMatches() {
-    const matches = await this.match.findAll();
+    const matches = await this.match.scope('matchScope').findAll();
     return matches;
   }
 }
