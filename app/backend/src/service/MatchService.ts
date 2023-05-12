@@ -11,6 +11,11 @@ class MatchService {
     const matches = await this.matchModel.getMatches(inProgress);
     return matches;
   }
+
+  async finishMatch(id: number) {
+    const match = await this.matchModel.finishMatch(id);
+    return match;
+  }
 }
 
 export default MatchService;

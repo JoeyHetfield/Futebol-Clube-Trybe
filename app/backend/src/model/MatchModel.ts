@@ -18,6 +18,7 @@ class MatchModel {
     const match = await this.match.findByPk(id);
     if (match) {
       match.inProgress = false;
+      await match.save();
     }
     return match;
   }
