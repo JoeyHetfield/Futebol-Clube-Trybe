@@ -13,6 +13,14 @@ class MatchModel {
     });
     return matches;
   }
+
+  async finishMatch(id: number) {
+    const match = await this.match.findByPk(id);
+    if (match) {
+      match.inProgress = false;
+    }
+    return match;
+  }
 }
 
 export default MatchModel;
