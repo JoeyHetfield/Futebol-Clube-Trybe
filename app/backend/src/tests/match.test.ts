@@ -44,4 +44,10 @@ describe('Se getMatches funciona', () => {
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal(getMatchesInProgessFalseMock);
   });
+  it('finishMatch não altera porque não foi passado um token', async () => {
+    const { status, body } = (await chai.request(app).patch('/matches/1/finish'));
+
+    expect(status).to.be.equal(401);
+    expect(body).to.be.deep.equal({ message: 'Token not found' });
+  });
 });
