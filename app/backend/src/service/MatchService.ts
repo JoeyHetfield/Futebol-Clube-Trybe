@@ -25,6 +25,21 @@ class MatchService {
     );
     return match;
   }
+
+  async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const match = await this.matchModel.createMatch(
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+    return match;
+  }
 }
 
 export default MatchService;
