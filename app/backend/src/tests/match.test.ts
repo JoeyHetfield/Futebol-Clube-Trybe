@@ -10,6 +10,7 @@ import getMatchesMock from './mock/match.mock';
 import getMatchesInProgessTrueMock from './mock/match.mock';
 import getMatchesInProgessFalseMock from './mock/match.mock';
 import Match from '../database/models/Match';
+import Jwt from '../utils/auth';
 
 chai.use(chaiHttp);
 
@@ -49,5 +50,29 @@ describe('Se getMatches funciona', () => {
 
     expect(status).to.be.equal(401);
     expect(body).to.be.deep.equal({ message: 'Token not found' });
+  });
+  it('finishMatch não altera porque não foi passado um token válido', async () => {
+    const { status, body } = (await chai.request(app).patch('/matches/1/finish').set('Authorization', 'token teste'));
+
+    expect(status).to.be.equal(401);
+    expect(body).to.be.deep.equal({ message: 'Token must be a valid token' });
+  })
+
+  it('finishMatch altera o jogo para finalizado', async () => {
+    const mockUser = {
+      id: 1,
+      email: 'admin@admin.com',
+      role: 'admin'
+    }
+
+    const token = new Jwt().createToken(mockUser);
+   
+    const { status, body } = (await chai.request(app).patch('/matches/41/finish').set('Authorization', token));
+
+    console.log(status, body); 
+
+    expect(status).to.be.equal(200);
+    expect(body).to.be.deep.equal({ message: 'Finished' });
+
   });
 });
