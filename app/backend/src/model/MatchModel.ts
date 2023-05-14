@@ -38,6 +38,21 @@ class MatchModel {
 
     return match;
   }
+
+  async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const match = await this.match.create({
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    });
+    return match;
+  }
 }
 
 export default MatchModel;
