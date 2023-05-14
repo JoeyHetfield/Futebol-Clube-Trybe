@@ -36,16 +36,7 @@ class MatchController {
       homeTeamGoals,
       awayTeamGoals,
     );
-
-    const createdMatch = {
-      homeTeamId: match.homeTeamId,
-      awayTeamId: match.awayTeamId,
-      homeTeamGoals: match.homeTeamGoals,
-      awayTeamGoals: match.awayTeamGoals,
-      inProgress: true,
-    };
-
-    res.status(201).json(createdMatch);
+    res.status(201).json(match);
   }
 }
 

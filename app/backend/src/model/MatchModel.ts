@@ -50,6 +50,7 @@ class MatchModel {
       awayTeamId,
       homeTeamGoals,
       awayTeamGoals,
+      inProgress: true,
     });
     return match;
   }
