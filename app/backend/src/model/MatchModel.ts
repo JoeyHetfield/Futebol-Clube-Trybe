@@ -28,9 +28,7 @@ class MatchModel {
     if (!match.inProgress) {
       throw new ErrorFile('Match is already over', 400);
     }
-    match.homeTeamGoals = homeTeamGoals;
-    match.awayTeamGoals = awayTeamGoals;
-    await match.save();
+    await match.update({ homeTeamGoals, awayTeamGoals });
 
     return match;
   }

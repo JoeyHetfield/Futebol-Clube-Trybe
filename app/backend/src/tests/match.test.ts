@@ -73,4 +73,28 @@ describe('Se getMatches funciona', () => {
     expect(body).to.be.deep.equal({ message: 'Finished' });
 
   });
+
+  it('updateMatch não altera porque não foi passado um token', async () => {
+    const { status, body } = (await chai.request(app).patch('/matches/1').send({ homeTeamGoals: 1, awayTeamGoals: 2 }));
+
+    expect(status).to.be.equal(401);
+    expect(body).to.be.deep.equal({ message: 'Token not found' });
+  });
+
+  it('updateMatch não altera uma partida que já acabou', async () => {
+    const mockUser = {
+      id: 1,
+      email: 'admin@admin.com',
+      role: 'admin'
+    }
+
+    const token = new Jwt().createToken(mockUser);
+
+    const { status, body } = (await chai.request(app).patch('/matches/1').set('Authorization', token).send({ homeTeamGoals: 1, awayTeamGoals: 2 }));
+
+    expect(status).to.be.equal(400);
+    expect(body).to.be.deep.equal({ message: 'Match is already over' });
+
+  });
+
 });
