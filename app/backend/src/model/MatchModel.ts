@@ -16,11 +16,7 @@ class MatchModel {
   }
 
   async finishMatch(id: number) {
-    const match = await this.match.findByPk(id);
-    if (match) {
-      match.inProgress = false;
-      await match.save();
-    }
+    const match = await this.match.update({ inProgress: false }, { where: { id } });
     return match;
   }
 

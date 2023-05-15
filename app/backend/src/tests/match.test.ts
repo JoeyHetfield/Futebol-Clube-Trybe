@@ -69,8 +69,6 @@ describe('Se getMatches funciona', () => {
    
     const { status, body } = (await chai.request(app).patch('/matches/41/finish').set('Authorization', token));
 
-    console.log(status, body); 
-
     expect(status).to.be.equal(200);
     expect(body).to.be.deep.equal({ message: 'Finished' });
 

@@ -12,7 +12,6 @@ class Jwt {
 
   createToken = (payload: string | object) => {
     const token = jwt.sign(payload, this._secretKey, this._configJWT);
-    console.log(token);
     return token;
   };
 
