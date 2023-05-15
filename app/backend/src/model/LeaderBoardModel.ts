@@ -1,6 +1,7 @@
 import MatchModel from './MatchModel';
 import TeamModel from './TeamModel';
 import LeaderBoardInter from '../interfaces/LeaderBoardInter';
+import Match from '../database/models/Match';
 
 // Fluxo 4: Leaderboards (Placares)
 
@@ -27,30 +28,60 @@ class LeaderBoardModel implements LeaderBoardInter {
     return finishedMatches;
   }
 
-  async numberOfGames(teamId: number) {
-    const finishedMatches = await this.getOverMatch();
-
-    const numberOfGames = finishedMatches.filter(
+  static async numberOfGames(teamId: number, matches: Match[]) {
+    const numberOfGames = matches.filter(
       (match) => match.homeTeamId === teamId || match.awayTeamId === teamId,
     ).length;
-
     return numberOfGames;
   }
 
-  async numberOfWins(teamId: number) {
-    const finishedMatches = await this.getOverMatch();
+  static async numberOfWinsHome(teamId: number, matches: Match[]) {
+    const numberOfWinsHome = matches.filter(
+      (match) => match.homeTeamId === teamId && match.homeTeamGoals > match.awayTeamGoals,
+    ).length;
+    return numberOfWinsHome;
+  }
 
-    const numberOfWins = finishedMatches.filter((match) => {
-      if (match.homeTeamId === teamId) {
-        return match.homeTeamGoals > match.awayTeamGoals;
-      }
-      if (match.awayTeamId === teamId) {
-        return match.awayTeamGoals > match.homeTeamGoals;
-      }
-      return false;
-    }).length;
+  static async numberOfWinsAway(teamId: number, matches: Match[]) {
+    const numberOfWinsAway = matches.filter(
+      (match) => match.awayTeamId === teamId && match.awayTeamGoals > match.homeTeamGoals,
+    ).length;
+    return numberOfWinsAway;
+  }
 
+  static async numberOfWins(teamId: number, matches: Match[]) {
+    const numberOfWinsHome = await LeaderBoardModel.numberOfWinsHome(teamId, matches);
+    const numberOfWinsAway = await LeaderBoardModel.numberOfWinsAway(teamId, matches);
+    const numberOfWins = numberOfWinsHome + numberOfWinsAway;
     return numberOfWins;
+  }
+
+  static async numberOfDraws(teamId: number, matches: Match[]) {
+    const numberOfDraws = matches.filter(
+      (match) => match.homeTeamId === teamId && match.homeTeamGoals === match.awayTeamGoals,
+    ).length;
+    return numberOfDraws;
+  }
+
+  static async numberOfLossesHome(teamId: number, matches: Match[]) {
+    const numberOfLossesHome = matches.filter(
+      (match) => match.homeTeamId === teamId && match.homeTeamGoals < match.awayTeamGoals,
+    ).length;
+    return numberOfLossesHome;
+  }
+
+  static async numberOfLossesAway(teamId: number, matches: Match[]) {
+    const numberOfLossesAway = matches.filter(
+      (match) => match.awayTeamId === teamId && match.awayTeamGoals < match.homeTeamGoals,
+    ).length;
+    return numberOfLossesAway;
+  }
+
+  static async numberOfLosses(teamId: number, matches: Match[]) {
+    const numberOfLossesHome = await LeaderBoardModel.numberOfLossesHome(teamId, matches);
+    const numberOfLossesAway = await LeaderBoardModel.numberOfLossesAway(teamId, matches);
+    const numberOfLosses = numberOfLossesHome + numberOfLossesAway;
+    return numberOfLosses;
   }
 }
 export default LeaderBoardModel;
