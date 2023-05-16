@@ -7,6 +7,8 @@ interface LeaderBoardInter {
   totalLosses: number;
   goalsFavor: number;
   goalsOwn: number;
+  goalsBalance: number;
+  efficiency: number;
 }
 
 export default LeaderBoardInter;

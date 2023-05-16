@@ -15,6 +15,13 @@ class MatchModel {
     return matches;
   }
 
+  async getFinishedMatches() {
+    const matches = await this.match.scope('matchScope').findAll({
+      where: { inProgress: false },
+    });
+    return matches;
+  }
+
   async finishMatch(id: number) {
     const match = await this.match.update({ inProgress: false }, { where: { id } });
     return match;
