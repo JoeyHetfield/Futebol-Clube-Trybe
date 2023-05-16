@@ -125,42 +125,45 @@ class LeaderBoardService {
 
   static async goalsFavor(teamId: number, matches: Match[], team: 'home' | 'away' | 'all') {
     if (team === 'home') {
-      const goalsFavorHome = matches
-        .filter((match) => match.homeTeamId === teamId)
+      const goalsFavorHome = matches.filter((match) => match.homeTeamId === teamId)
         .reduce((acc, match) => acc + match.homeTeamGoals, 0);
       return goalsFavorHome;
     }
     if (team === 'away') {
-      const goalsFavorAway = matches
-        .filter((match) => match.awayTeamId === teamId)
+      const goalsFavorAway = matches.filter((match) => match.awayTeamId === teamId)
         .reduce((acc, match) => acc + match.awayTeamGoals, 0);
       return goalsFavorAway;
     }
 
     const goalsFavor = matches
       .filter((match) => match.homeTeamId === teamId || match.awayTeamId === teamId)
-      .reduce((acc, match) => acc + match.homeTeamGoals + match.awayTeamGoals, 0);
+      .reduce((acc, match) => {
+        if (match.homeTeamId === teamId) return acc + match.homeTeamGoals;
+        return acc + match.awayTeamGoals;
+      }, 0);
+
     return goalsFavor;
   }
 
   static async goalsOwn(teamId: number, matches: Match[], team: 'home' | 'away' | 'all') {
     if (team === 'home') {
-      const goalsOwn = matches
-        .filter((match) => match.homeTeamId === teamId)
+      const goalsOwn = matches.filter((match) => match.homeTeamId === teamId)
         .reduce((acc, match) => acc + match.awayTeamGoals, 0);
       return goalsOwn;
     }
 
     if (team === 'away') {
-      const goalsOwn = matches
-        .filter((match) => match.awayTeamId === teamId)
+      const goalsOwn = matches.filter((match) => match.awayTeamId === teamId)
         .reduce((acc, match) => acc + match.homeTeamGoals, 0);
       return goalsOwn;
     }
 
     const goalsOwn = matches
       .filter((match) => match.homeTeamId === teamId || match.awayTeamId === teamId)
-      .reduce((acc, match) => acc + match.homeTeamGoals + match.awayTeamGoals, 0);
+      .reduce((acc, match) => {
+        if (match.awayTeamId === teamId) return acc + match.homeTeamGoals;
+        return acc + match.awayTeamGoals;
+      }, 0);
     return goalsOwn;
   }
 
@@ -184,12 +187,3 @@ class LeaderBoardService {
   }
 }
 export default LeaderBoardService;
-
-// O resultado deverá ser ordenado sempre de forma decrescente, levando em consideração a quantidade de pontos que o time acumulou.
-// Em caso de empate no Total de Pontos, você deve levar em consideração os seguintes critérios para desempate:
-
-// Ordem para desempate
-
-// 1º Total de Vitórias;
-// 2º Saldo de gols;
-// 3º Gols a favor;
