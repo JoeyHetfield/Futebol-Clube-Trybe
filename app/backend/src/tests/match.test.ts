@@ -11,6 +11,7 @@ import getMatchesInProgessTrueMock from './mock/match.mock';
 import getMatchesInProgessFalseMock from './mock/match.mock';
 import Match from '../database/models/Match';
 import Jwt from '../utils/auth';
+import MatchModel from '../model/MatchModel';
 
 chai.use(chaiHttp);
 
@@ -97,4 +98,38 @@ describe('Se getMatches funciona', () => {
 
   });
 
+  // esse não está funcionando ainda
+  it('createMatch consegue criar uma partida nova', async () => {
+    const mockUser = {
+      id: 1,
+      email: 'admin@admin.com',
+      role: 'admin',
+    };
+  
+    const mockMatch = {
+      homeTeamId: 1,
+      awayTeamId: 2,
+      homeTeamGoals: 1,
+      awayTeamGoals: 2,
+    };
+  
+    const token = new Jwt().createToken(mockUser);
+  
+      const { status, body } = await chai
+      .request(app)
+      .post('/matches')
+      .set('Authorization', token)
+      .send({ homeTeamId: 1, awayTeamId: 2, homeTeamGoals: 1, awayTeamGoals: 2 });
+  
+    expect(status).to.be.equal(201);
+    expect(body).to.be.deep.equal({
+      awayTeamGoals: 2,
+      awayTeamId: 2,
+      homeTeamGoals: 1,
+      homeTeamId: 1,
+      id: 50,
+      inProgress: true,
+    });
+
+  });
 });
